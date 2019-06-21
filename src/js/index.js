@@ -1,18 +1,15 @@
 // jshint esversion: 6
 
-window.SpeechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition;
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-// The code below will detect speech
 const recognition = new SpeechRecognition();
 recognition.interimResults = true;
+recognition.lang = 'en-US';
 
-// This code will create the paragraph elements in the HTML
 let p = document.createElement('p');
 const words = document.querySelector('.words');
 words.appendChild(p);
 
-// This code will print out the spoken workds in the dialogue box
 recognition.addEventListener('result', e => {
     const transcript = Array.from(e.results)
         .map(result => result[0])
@@ -27,5 +24,7 @@ recognition.addEventListener('result', e => {
         words.appendChild(p);
     }
 });
+
+recognition.addEventListener('end', recognition.start);
 
 recognition.start();
